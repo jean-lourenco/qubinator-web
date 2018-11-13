@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <title>
+            Qubinator
+        </title>
+
+        <meta lang="pt-BR"/>
+        <meta charset="UTF-8"/>
+
+        <script src="cli.js"></script>
+        <style>
+            .wrapper {
+                text-align: center;
+            }
+
+            .center-div {
+                display: inline-block;
+            }
+
+            .left-panel {
+                float: left;
+            }
+
+            .center-panel {
+                float: left;
+                margin: 0px 20px 0px 20px;
+            }
+
+            .right-panel {
+                float: right;
+            }
+
+            .choice-panel {
+                padding: 15px 30px 15px 30px;
+                border: 2px outset black; 
+                margin: 5px 0px 5px 0px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .choice-panel:hover {
+                border-style: groove;
+            }
+
+            .query {
+                width: 100%;
+                margin: 10px 0px 10px 0px;
+                padding: 5px 5px 5px 10px;
+                border-radius: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header style="text-align: center">
+            <h1>the QUBINATOR</h1>
+        </header>
+        <div class="wrapper">
+            <div class="center-div">
+                <div class="left-panel">
+                    <div class="choice-panel">
+                        <input type="checkbox" style="cursor: pointer;" />
+                        <label style="cursor: pointer;">2d Simples</label>
+                    </div>
+                    <div class="choice-panel">
+                        <input type="checkbox" style="cursor: pointer;" />
+                        <label style="cursor: pointer;">2d Completo</label>
+                    </div>
+                    <div class="choice-panel">
+                        <input type="checkbox" style="cursor: pointer;" />
+                        <label style="cursor: pointer;">3d</label>
+                    </div>
+                </div>
+
+                <div class="center-panel">
+                    <input 
+                        type="text" 
+                        class="query" 
+                        id="query"
+                        onkeyup="updateResult(this)"
+                        placeholder="Sua Palavra será Qubinatorizada!" />
+                    <br>
+                    <textarea id="result" rows="35" cols="35"></textarea>
+                </div>
+
+                <div class="right-panel">
+                    <div class="choice-panel">
+                        <input type="checkbox" id="reddit" style="cursor: pointer;" onchange="onReddit(this)" />
+                        <label style="cursor: pointer;">Para Reddit?</label>
+                    </div>
+                    <div class="choice-panel">
+                        <input type="checkbox" style="cursor: pointer;" />
+                        <label style="cursor: pointer;">Para Caixa-Alta?</label>
+                    </div>
+                    <div class="choice-panel">
+                        <button>Copiar para Área de Transferência</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let result = document.getElementById('result');
+            let paraReddit = false;
+
+            function updateResult(src) {
+                var txt = Quber.to3d(src.value);
+
+                if (paraReddit) {
+                    var lines = txt.split('\n');
+                    console.log(lines);
+                    for (let i = 0; i < lines.length; i++) {
+                        //lines[i] = "    " + lines[i];
+                    }
+                    //txt = lines.join('');
+                }
+                result.value = txt;
+            }
+
+            function onReddit(src) {
+                paraReddit = src.checked;
+            }
+        </script>
+    </body>
+</html>
