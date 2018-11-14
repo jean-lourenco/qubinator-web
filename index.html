@@ -26,10 +26,6 @@
                 margin: 0px 20px 0px 20px;
             }
 
-            .right-panel {
-                float: right;
-            }
-
             .choice-panel {
                 padding: 15px 30px 15px 30px;
                 border: 2px outset black; 
@@ -58,17 +54,58 @@
         <div class="wrapper">
             <div class="center-div">
                 <div class="left-panel">
-                    <div class="choice-panel">
-                        <input type="checkbox" style="cursor: pointer;" />
-                        <label style="cursor: pointer;">2d Simples</label>
+                    <div class="choice-panel" onclick="select('3d')">
+                        <input 
+                            type="radio" 
+                            name="type" 
+                            onchange="updateResult()" 
+                            id="3d" 
+                            value="3d" 
+                            style="cursor: pointer;" 
+                            checked />
+                        <label style="cursor: pointer;">3D</label>
+                    </div>
+                    <div class="choice-panel" onclick="select('2dsimple')">
+                        <input 
+                            type="radio" 
+                            name="type" 
+                            onchange="updateResult()" 
+                            id="2dsimple" 
+                            value="2dsimple" 
+                            style="cursor: pointer;" />
+                        <label style="cursor: pointer;">2D (Simples)</label>
+                    </div>
+                    <div class="choice-panel" onclick="select('2dfull')">
+                        <input 
+                            type="radio" 
+                            name="type" 
+                            onchange="updateResult()" 
+                            id="2dfull" 
+                            value="2dfull" 
+                            style="cursor: pointer;" />
+                        <label style="cursor: pointer;">2D (Completo)</label>
+                    </div>
+
+                    <br><br><br>
+
+                    <div class="choice-panel" onclick="toggle('reddit')">
+                        <input 
+                            type="checkbox" 
+                            id="reddit" 
+                            style="cursor: pointer;" 
+                            onchange="updateResult();" />
+                        <label style="cursor: pointer;">Para Reddit?</label>
+                    </div>
+                    <div class="choice-panel" onclick="toggle('caixaalta')">
+                        <input 
+                            type="checkbox" 
+                            id="caixaalta" 
+                            style="cursor: pointer;" 
+                            onchange="updateResult()" />
+                        <label style="cursor: pointer;">Para Caixa-Alta?</label>
                     </div>
                     <div class="choice-panel">
-                        <input type="checkbox" style="cursor: pointer;" />
-                        <label style="cursor: pointer;">2d Completo</label>
-                    </div>
-                    <div class="choice-panel">
-                        <input type="checkbox" style="cursor: pointer;" />
-                        <label style="cursor: pointer;">3d</label>
+                        <button>Copiar para Área de Transferência</button>
                     </div>
                 </div>
 
@@ -82,40 +119,54 @@
                     <br>
                     <textarea id="result" rows="35" cols="35"></textarea>
                 </div>
-
-                <div class="right-panel">
-                    <div class="choice-panel">
-                        <input type="checkbox" id="reddit" style="cursor: pointer;" />
-                        <label style="cursor: pointer;">Para Reddit?</label>
-                    </div>
-                    <div class="choice-panel">
-                        <input type="checkbox" style="cursor: pointer;" />
-                        <label style="cursor: pointer;">Para Caixa-Alta?</label>
-                    </div>
-                    <div class="choice-panel">
-                        <button>Copiar para Área de Transferência</button>
-                    </div>
-                </div>
             </div>
         </div>
 
         <script>
             let result = document.getElementById('result');
+            let src = document.getElementById('query');
             let reddit = document.getElementById('reddit');
+            let caixaAlta = document.getElementById('caixaalta');
 
-            function updateResult(src) {
-                var txt = Quber.to3d(src.value);
+            function updateResult(e) {
+                let type = document.querySelector('input[name="type"]:checked').value;
+                let queryValue = query.value;
+
+                if (caixaAlta.checked) {
+                    queryValue = queryValue.toUpperCase();
+                }
+                
+                let txt;
+                if (type == '2dsimple') 
+                    txt = Quber.to2dSimple(queryValue);
+                else if (type == '2dfull')
+                    txt = Quber.to2dFull(queryValue);
+                else 
+                    txt = Quber.to3d(queryValue);
 
                 if (reddit.checked) {
                     var lines = txt.split('\n');
-                    console.log(lines);
+                    
                     for (let i = 0; i < lines.length; i++) {
-                        //lines[i] = "    " + lines[i];
+                        lines[i] = "    " + lines[i];
                     }
-                    //txt = lines.join('');
+                    txt = lines.join('\n');
                 }
+
                 result.value = txt;
             }
+
+            function select(vlr) {
+                document.getElementById(vlr).checked = true;
+                updateResult();
+            }
+
+            function toggle(vlr) {
+                var el = document.getElementById(vlr);
+                el.checked = !el.checked;
+                updateResult();
+            }
+
         </script>
     </body>
 </html>
