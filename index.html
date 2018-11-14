@@ -85,7 +85,7 @@
 
                 <div class="right-panel">
                     <div class="choice-panel">
-                        <input type="checkbox" id="reddit" style="cursor: pointer;" onchange="onReddit(this)" />
+                        <input type="checkbox" id="reddit" style="cursor: pointer;" />
                         <label style="cursor: pointer;">Para Reddit?</label>
                     </div>
                     <div class="choice-panel">
@@ -101,12 +101,12 @@
 
         <script>
             let result = document.getElementById('result');
-            let paraReddit = false;
+            let reddit = document.getElementById('reddit');
 
             function updateResult(src) {
                 var txt = Quber.to3d(src.value);
 
-                if (paraReddit) {
+                if (reddit.checked) {
                     var lines = txt.split('\n');
                     console.log(lines);
                     for (let i = 0; i < lines.length; i++) {
@@ -115,10 +115,6 @@
                     //txt = lines.join('');
                 }
                 result.value = txt;
-            }
-
-            function onReddit(src) {
-                paraReddit = src.checked;
             }
         </script>
     </body>
