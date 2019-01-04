@@ -7,142 +7,94 @@
         <meta lang="pt-BR"/>
         <meta charset="UTF-8"/>
 
-        <script src="cli.js"></script>
+        <link rel="stylesheet" 
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+            crossorigin="anonymous">
+
         <style>
-            .wrapper {
-                text-align: center;
+            textarea {
+                 font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
             }
-
-            .center-div {
-                display: inline-block;
-            }
-
-            .left-panel {
-                float: left;
-            }
-
-            .center-panel {
-                float: left;
-                margin: 0px 20px 0px 20px;
-            }
-
-            .choice-panel {
-                padding: 15px 30px 15px 30px;
-                border: 2px outset black; 
-                margin: 5px 0px 5px 0px;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-
-            .choice-panel:hover {
-                border-style: groove;
-            }
-
-            .query {
-                width: 100%;
-                margin: 10px 0px 10px 0px;
-                padding: 5px 5px 5px 10px;
-                border-radius: 10px;
-            }
-
         </style>
     </head>
     <body>
         <header style="text-align: center">
-            <h1>the QUBINATOR</h1>
+            <h1>Qubinator</h1>
         </header>
-        <div class="wrapper">
-            <div class="center-div">
-                <div class="left-panel">
-                    <div class="choice-panel" onclick="select('3d')">
-                        <input 
-                            type="radio" 
-                            name="type" 
-                            onchange="updateResult()" 
-                            id="3d" 
-                            value="3d" 
-                            style="cursor: pointer;" 
-                            checked />
-                        <label style="cursor: pointer;">3D</label>
-                    </div>
-                    <div class="choice-panel" onclick="select('2dsimple')">
-                        <input 
-                            type="radio" 
-                            name="type" 
-                            onchange="updateResult()" 
-                            id="2dsimple" 
-                            value="2dsimple" 
-                            style="cursor: pointer;" />
-                        <label style="cursor: pointer;">2D (Simples)</label>
-                    </div>
-                    <div class="choice-panel" onclick="select('2dfull')">
-                        <input 
-                            type="radio" 
-                            name="type" 
-                            onchange="updateResult()" 
-                            id="2dfull" 
-                            value="2dfull" 
-                            style="cursor: pointer;" />
-                        <label style="cursor: pointer;">2D (Completo)</label>
+        
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 text-center">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="type" id="3d" autocomplete="off" checked onchange="updateResult()"> 3D
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="type" id="2dsimple" autocomplete="off" onchange="updateResult()"> 2D
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="type" id="2dfull" autocomplete="off" onchange="updateResult()"> 2D Simples
+                        </label>
                     </div>
 
-                    <br><br><br>
+                    <div class="w-100"></div>
 
-                    <div class="choice-panel" onclick="toggle('reddit')">
-                        <input 
-                            type="checkbox" 
-                            id="reddit" 
-                            style="cursor: pointer;" 
-                            onchange="updateResult();" />
-                        <label style="cursor: pointer;">Para Reddit?</label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top:1em">
+                        <label class="btn btn-secondary">
+                            <input type="checkbox" id="reddit" autocomplete="off" onchange="updateResult()"> Para Reddit?
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="checkbox" id="caixaalta" autocomplete="off" onchange="updateResult()"> Para Caixa-Alta?
+                        </label>
                     </div>
-                    <div class="choice-panel" onclick="toggle('caixaalta')">
-                        <input 
-                            type="checkbox" 
-                            id="caixaalta" 
-                            style="cursor: pointer;" 
-                            onchange="updateResult()" />
-                        <label style="cursor: pointer;">Para Caixa-Alta?</label>
-                    </div>
-                    <div class="choice-panel">
-                        <button>Copiar para Área de Transferência</button>
-                    </div>
-                </div>
 
-                <div class="center-panel">
-                    <input 
-                        type="text" 
-                        class="query" 
-                        id="query"
-                        onkeyup="updateResult(this)"
-                        placeholder="Sua Palavra será Qubinatorizada!" />
-                    <br>
-                    <textarea id="result" rows="35" cols="35"></textarea>
+                    <div class="form-group row" style="margin-top: 1em;">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="query" placeholder="Palavra para Qubinizar!" onkeyup="updateResult()" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" id="copy" type="button">Copiar Resultado</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" style="margin-top: 1em;">
+                        <textarea class="form-control" rows="28" cols="25" id="result" autocomplete="off"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <footer style="text-align: center">
+            Feito com ❤ por <a href="https://github.com/jean-lourenco">Jean Lourenço</a>
+        </footer>
+
+        <script src="cli.js"></script>
 
         <script>
             let result = document.getElementById('result');
             let src = document.getElementById('query');
             let reddit = document.getElementById('reddit');
-            let caixaAlta = document.getElementById('caixaalta');
+            let upperCase = document.getElementById('caixaalta');
+            let copyButton = document.getElementById("copy");
 
-            function updateResult(e) {
-                let type = document.querySelector('input[name="type"]:checked').value;
+            function updateResult() {
+                let type = document.querySelector('input[name="type"]:checked').id;
                 let queryValue = query.value;
 
-                if (caixaAlta.checked) {
+                copyButton.classList = 'btn btn-primary'
+                copyButton.innerHTML = "Copiar Resultado";
+
+                if (upperCase.checked) {
                     queryValue = queryValue.toUpperCase();
                 }
                 
-                let txt;
                 if (type == '2dsimple') 
-                    txt = Quber.to2dSimple(queryValue);
+                    var txt = Quber.to2dSimple(queryValue);
                 else if (type == '2dfull')
-                    txt = Quber.to2dFull(queryValue);
+                    var txt = Quber.to2dFull(queryValue);
                 else 
-                    txt = Quber.to3d(queryValue);
+                    var txt = Quber.to3d(queryValue);
 
                 if (reddit.checked) {
                     var lines = txt.split('\n');
@@ -156,17 +108,36 @@
                 result.value = txt;
             }
 
-            function select(vlr) {
-                document.getElementById(vlr).checked = true;
-                updateResult();
+            function copyToClipboard() {
+                result.select();
+                document.execCommand('copy');
             }
 
-            function toggle(vlr) {
-                var el = document.getElementById(vlr);
-                el.checked = !el.checked;
-                updateResult();
-            }
+            copyButton.addEventListener('click', function(e) {
+                result.select();
+                document.execCommand('copy');
 
+                copyButton.classList = 'btn btn-success'
+                copyButton.innerHTML = "Copiado!";
+            });
+
+            if (src.value)
+                updateResult();
         </script>
+
+        <script 
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+            crossorigin="anonymous"></script>
+
+        <script 
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+            crossorigin="anonymous"></script>
+
+        <script 
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" 
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" 
+            crossorigin="anonymous"></script>
     </body>
 </html>
