@@ -71,7 +71,7 @@ class QuberMatrix {
     }
 }
 
-const err_msg = 'A palavra deve no mínimo três caracteres';
+const err_msg = 'A palavra deve ter no mínimo três caracteres';
 
 class Quber {
     static to2dSimple(word) {
